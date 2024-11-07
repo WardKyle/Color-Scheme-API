@@ -1,6 +1,7 @@
 const btnDropdown = document.getElementById("btn-dropdown");
 const dropdownMenu = document.getElementById("dropdown");
 const dropdownItems = document.querySelectorAll("#dropdown a");
+const selected = document.getElementById("selected");
 const baseUrl = "https://www.thecolorapi.com";
 let colorSchemes = null;
 // Get color schemes setter
@@ -18,13 +19,13 @@ const getNewColorSchemeS = () => {
 };
 // Dropdown button text setter
 const setSelected = () => {
-  const selected = document.getElementById("selected");
   btnDropdown.innerHTML = `<p>${selected.innerText}</p><i class="bx bx-chevron-down" id="arrow"></i>`;
 };
 btnDropdown.addEventListener("click", () => {
+  dropdownMenu.style.zIndex = "1";
   dropdownMenu.style.height = "auto";
   dropdownItems.forEach((el) => {
-    el.style.position = "relative";
+    el.style.height = "20px";
   });
 });
 getNewColorSchemeS();
