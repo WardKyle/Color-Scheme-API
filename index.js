@@ -1,12 +1,22 @@
 const btnDropdown = document.getElementById("btn-dropdown");
 const dropdownMenu = document.getElementById("dropdown");
+const colorTemplate = document.getElementById("color-template");
+const colorName = document.getElementById("color-name");
 const dropdownItems = document.querySelectorAll("#dropdown a");
-const selected = document.getElementById("selected");
+const dropdowBtns = document.querySelectorAll("#dropdown .btn");
+const getSelected = () => {
+  return document.getElementById("selected");
+}
+const selected = getSelected();
+
 const baseUrl = "https://www.thecolorapi.com";
 let colorSchemes = null;
+
 // Get color schemes setter
-const getNewColorSchemeS = () => {
-  fetch(`${baseUrl}/scheme?hex=000000`, {
+const getNewColorSchemes = () => {
+  const newColorPicker = document.getElementById("color-picker");
+  const thisMode = getSelected();
+  fetch(`${baseUrl}/scheme?hex=${newColorPicker.value.slice(1)}&mode=${thisMode.innerHTML.toLowerCase()}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -14,19 +24,49 @@ const getNewColorSchemeS = () => {
   })
     .then((res) => res.json())
     .then((data) => {
+      let templateHTML = '';
       colorSchemes = data.colors;
+      console.log(colorSchemes)
+      colorSchemes.forEach(el => {
+        const {hex:{value}} = el;
+        templateHTML += `
+          <div class="colors" style="background-color:${value}";></div>
+        `
+      })
+      colorTemplate.innerHTML = templateHTML;
     });
 };
 // Dropdown button text setter
-const setSelected = () => {
-  btnDropdown.innerHTML = `<p>${selected.innerText}</p><i class="bx bx-chevron-down" id="arrow"></i>`;
+const setSelected = (param1) => {
+  btnDropdown.innerHTML = `<p>${param1.innerText}</p><i class="bx bx-chevron-down" id="arrow"></i>`;
 };
 btnDropdown.addEventListener("click", () => {
   dropdownMenu.style.zIndex = "1";
-  dropdownMenu.style.height = "auto";
   dropdownItems.forEach((el) => {
     el.style.height = "20px";
   });
 });
-getNewColorSchemeS();
-setSelected();
+
+getNewColorSchemes();
+setSelected(selected);
+
+dropdowBtns.forEach(el => {
+  el.addEventListener("click", () => {
+    console.log(el.innerHTML);
+    dropdowBtns.forEach(el => el.id = "");
+    el.id = "selected";
+    setSelected(el);
+    closeDropdown();
+  })
+});
+
+const closeDropdown = () => {
+  dropdownMenu.style.zIndex = "-1";
+  dropdownItems.forEach((el) => {
+    el.style.height = "0px";
+  });
+}
+
+document.getElementById("get-color-scheme").addEventListener("click",() => {
+  getNewColorSchemes();
+})
