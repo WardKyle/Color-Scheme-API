@@ -13,8 +13,7 @@
   /* Display flex */
   #main,
   #dropdown,
-  #btn-dropdown
-  #scheme,
+  #btn-dropdown,
   #template,
   #name {
     display: flex;
@@ -38,6 +37,11 @@
   #dropdown {
     background-color: white;
   }
+  #color-template,
+  #color-name {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
   /* ---------- */
   /* Alpha divs */
   /* ---------- */
@@ -47,6 +51,9 @@
   }
   .colors {
     height: 100%;
+  }
+  #color-template {
+    height: 400px;
   }
   #dropdown {
     flex-direction: column;
@@ -74,15 +81,15 @@
     justify-content: space-around;
     align-items: center;
   }
+  .names {
+    margin: auto;
+  }
   #scheme {
-    flex-direction: column;
+
   }
   #selected {
     background-image: url('/images/check-solid.svg');
     background-repeat: no-repeat;
     background-position-x: right;
     font-weight: bold;
-  }
-  #color-template {
-    height: 500px;
   }

@@ -25,15 +25,16 @@ const getNewColorSchemes = () => {
     .then((res) => res.json())
     .then((data) => {
       let templateHTML = '';
+      let nameHTML = '';
       colorSchemes = data.colors;
       console.log(colorSchemes)
       colorSchemes.forEach(el => {
         const {hex:{value}} = el;
-        templateHTML += `
-          <div class="colors" style="background-color:${value}";></div>
-        `
+        templateHTML += `<div class="colors" style="background-color:${value}";></div>`;
+        nameHTML += `<div class="names">${value}</div>`;
       })
       colorTemplate.innerHTML = templateHTML;
+      colorName.innerHTML = nameHTML;
     });
 };
 // Dropdown button text setter
